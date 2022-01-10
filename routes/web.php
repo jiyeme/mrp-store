@@ -22,7 +22,7 @@ Route::get('/hello', function () {
     return "Hello World!";
 });
 
-Route::get('/Store/App/list/slug/{slug}/{page?}', [AppController::class, 'list', 'page']);
+Route::get('/Store/App/list/slug/{slug}/{page?}', [AppController::class, 'list']);
 
 Route::get('/upload', function () {
     return view('upload');

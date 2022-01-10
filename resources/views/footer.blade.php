@@ -3,7 +3,7 @@
 <script type="text/javascript">
     function onDownloadApk(id) {
         if (id && id != 0) {
-            if({{ config('DL_PASS_STATUS')?1:0 }})
+            if({{ env('DL_PASS_STATUS')?1:0 }})
             {
                 if(null === localStorage.getItem("DL_PASS"))
                 {
@@ -170,7 +170,7 @@ if(sadDay.includes(today))
 }
 </script>
 <!--reCaptcha-->
-<script src='https://www.recaptcha.net/recaptcha/api.js?render={{ config('reCAPTCHA_site_key') }}'></script>
+<script src='https://www.recaptcha.net/recaptcha/api.js?render={{ env('reCAPTCHA_site_key') }}'></script>
 <!--reCaptcha-->
 <div id="footer" style="margin-top: 20px;/*z-index: 10;*/">
     <div class="content">

@@ -150,6 +150,7 @@
 				cache: false,
 				processData: false,
 				contentType: false,
+                dataType: 'json',
 				async: true,
 				enctype: 'multipart/form-data',
 				xhr: function() {
