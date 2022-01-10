@@ -61,17 +61,18 @@ class ApiController extends Controller
 
             $out = array(
                 'code' => 200,
-                'msg' => "http://mrp-cdn.jysafe.cn/{$downloadinfo['path']}"
+                'msg' => str_replace('//', '/', "/{$downloadinfo['path']}")
             );
 
             if(!env('STORAGE_QINIU_ENABLE')){
+                $out['msg'] = 'http://' . env('STORAGE_DOWNLOAD_DOMAIN') . $out['msg'];
                 exit(json_encode($out));
             }
 
             // 启用七牛
             Loader::library('QiniuStorage');
             $qn = new QiniuStorage(env('STORAGE_QINIU_AK'), env('STORAGE_QINIU_SK'));
-            $out['msg'] = $qn->genDownloadUrl($out['msg']);
+            $out['msg'] = str_replace(env('STORAGE_QINIU_HOST'), env('STORAGE_DOWNLOAD_DOMAIN'), $qn->genDownloadUrl('http://' . env('STORAGE_QINIU_HOST') .$out['msg']));
 
             exit(json_encode($out));
         } catch (\Throwable $th) {

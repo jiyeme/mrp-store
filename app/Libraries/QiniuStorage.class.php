@@ -198,6 +198,6 @@ class QiniuStorage
     {
         //初始化签权对象
         $auth = new Auth($this->accessKey, $this->secretKey);
-        return $auth->privateDownloadUrl($baseUrl, 20);
+        return $auth->privateDownloadUrl($baseUrl, 60);
     }
 }
