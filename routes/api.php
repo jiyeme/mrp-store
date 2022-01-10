@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,8 @@ Route::post('upload/md5Check', [UploadController::class, 'md5Check']);
 Route::post('upload/mrp', [UploadController::class, 'mrp']);
 
 Route::post('upload/jar', [UploadController::class, 'jar']);
+
+// Route::group(['middleware' => ['web']], function () {
+//     // your routes here
+//     Route::post('download', [ApiController::class, 'download']);
+// });

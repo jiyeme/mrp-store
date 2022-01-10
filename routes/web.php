@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,5 @@ Route::get('/upload', function () {
 Route::get('/support', function () {
     return view('support');
 });
+
+Route::post('api/download', [ApiController::class, 'download']);

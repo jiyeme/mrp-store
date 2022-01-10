@@ -48,7 +48,7 @@
         })
         new Promise((resolve, reject)=>{
             grecaptcha.ready(function() {
-                grecaptcha.execute('{{ config("reCAPTCHA_site_key") }}').then(function(token) {
+                grecaptcha.execute('{{ env("reCAPTCHA_site_key") }}').then(function(token) {
                     console.log(token);
                     resolve(token);
                 }).catch((err)=>{
@@ -65,6 +65,7 @@
                     "id": id,
                     "password": password
                 },
+                dataType: 'json',
                 success: function(result) {
                     console.log(result);
                     var data = result;

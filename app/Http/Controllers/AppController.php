@@ -70,7 +70,7 @@ class AppController extends Controller
         );
     }
 
-    public function info($id){
+    public function info(Request $request, $id){
         // header("content-type:application/json");
 
         $ret = DB::selectOne('SELECT * FROM `store_app` WHERE `id` = ?', [$id]);
@@ -114,10 +114,11 @@ class AppController extends Controller
         )
         */
 
-        $_SESSION['DowloadInfo'] = array(
+        $request->session()->put('dowload_info', array(
             'id' => $id,
             'path' => '/' . $ret->file_path
-        );
+        ));
+        // var_dump($request->session()->all());
 
         $title = "{$ret->name} - 下载";
 
