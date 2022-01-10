@@ -38,7 +38,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] === 1)
                                 'addTime' => string '1582896657' (length=10)
                                 'type' => string '' (length=0)
                             */
-                echo "<a href=\"/Store/App/info/id/{$value->id}\" id=\"{$value->id}\" >
+                echo "<a href=\"/Store/App/info/{$value->id}\" id=\"{$value->id}\" >
                             <div class=\"alllist_app\">
                                 <div class=\"alllist_app_side\">
                                     <img class=\"alllist_img\" style=\"border-radius: 35px;\" src=\"";

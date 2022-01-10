@@ -24,6 +24,8 @@ Route::get('/hello', function () {
 
 Route::get('/Store/App/list/slug/{slug}/{page?}', [AppController::class, 'list']);
 
+Route::get('/Store/App/info/{id}', [AppController::class, 'info']);
+
 Route::get('/upload', function () {
     return view('upload');
 });

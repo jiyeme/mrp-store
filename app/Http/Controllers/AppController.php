@@ -69,4 +69,77 @@ class AppController extends Controller
             ]
         );
     }
+
+    public function info($id){
+        // header("content-type:application/json");
+
+        $ret = DB::selectOne('SELECT * FROM `store_app` WHERE `id` = ?', [$id]);
+
+        // 根据score降序
+        $sql_tag_id = "SELECT b.term_id as tag_id, b.slug as slug, b.name as tag_name FROM store_app a, store_terms b, store_term_relationships c, store_term_taxonomy d
+        WHERE a.id=c.object_id AND c.term_taxonomy_id=d.term_taxonomy_id AND d.term_id=b.term_id
+        AND a.id='{$id}' AND d.taxonomy!='category' ORDER BY `c`.`term_score` DESC";
+        $tags = array();
+        $query = DB::select($sql_tag_id);
+        foreach ($query as $row) {
+            $tags[$row->slug] = $row->tag_name;
+            if (count($tags) >= 5)
+                break;
+        }
+        $ret->tags = $tags;
+
+        $sql = "SELECT b.term_id as tag_id, b.slug as slug, b.name as name FROM store_app a, store_terms b, store_term_relationships c, store_term_taxonomy d
+        WHERE a.id=c.object_id AND c.term_taxonomy_id=d.term_taxonomy_id AND d.term_id=b.term_id
+        AND a.id='{$id}' AND d.taxonomy='category'";
+        $term = DB::selectOne($sql);
+
+        /*
+        Array
+        (
+            [id] => 11474
+            [version] => 101
+            [name] => 计算器老虎版
+            [author] => 老虎会游泳
+            [description] => 计算器老虎会游泳开发，编译于2020.10.26
+            [appId] => 30043
+            [ch] => e6c1ec341
+            [file_path] => mrpApp/计算器老虎版_52828a308400ea223128acc523e9b429.mrp
+            [md5] => 52828a308400ea223128acc523e9b429
+            [size] => 252666
+            [addTime] => 1603815891
+            [tags] => Array
+                (
+                )
+
+        )
+        */
+
+        $_SESSION['DowloadInfo'] = array(
+            'id' => $id,
+            'path' => '/' . $ret->file_path
+        );
+
+        $title = "{$ret->name} - 下载";
+
+        $tags = array();
+        $sql = "SELECT a.term_id as term_id, a.name as name, a.slug as slug, b.taxonomy as taxonomy, b.term_taxonomy_id
+        FROM store_terms a, store_term_taxonomy b WHERE a.term_id=b.term_id AND b.taxonomy!='category'";
+        $query = DB::select($sql);
+        foreach ($query as $row) {
+            $tags[$row->taxonomy][] = array(
+                'tag_id' => $row->term_id,
+                'term_taxonomy_id' => $row->term_taxonomy_id,
+                'tag_slug' => $row->slug,
+                'tag_name' => $row->name
+            );
+        }
+
+        return view('info', [
+            'term' => $term,
+            'tags' => $tags,
+            'title' => $title,
+            'ret'=> $ret,
+            'id' => $id
+        ]);
+    }
 }
