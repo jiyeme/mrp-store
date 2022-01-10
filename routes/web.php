@@ -27,3 +27,7 @@ Route::get('/Store/App/list/slug/{slug}/{page?}', [AppController::class, 'list']
 Route::get('/upload', function () {
     return view('upload');
 });
+
+Route::get('/support', function () {
+    return view('support');
+});
