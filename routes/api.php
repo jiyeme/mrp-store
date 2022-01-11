@@ -26,7 +26,4 @@ Route::post('upload/mrp', [UploadController::class, 'mrp']);
 
 Route::post('upload/jar', [UploadController::class, 'jar']);
 
-// Route::group(['middleware' => ['web']], function () {
-//     // your routes here
-//     Route::post('download', [ApiController::class, 'download']);
-// });
+

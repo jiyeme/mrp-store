@@ -36,3 +36,5 @@ Route::get('/support', function () {
 });
 
 Route::post('api/download', [ApiController::class, 'download']);
+
+Route::any('/api.php', [ApiController::class, 'api']);
