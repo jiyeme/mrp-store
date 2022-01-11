@@ -57,7 +57,7 @@ class AppController extends Controller
             );
         }
 
-        return view('app', [
+        return view('list', [
             'tags' => $tags,
             'slug' => $slug,
             'appList' => $appList,
