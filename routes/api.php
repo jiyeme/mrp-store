@@ -25,7 +25,7 @@ Route::post('upload/md5Check', [UploadController::class, 'md5Check']);
 Route::post('upload/mrp', [UploadController::class, 'mrp']);
 Route::post('upload/jar', [UploadController::class, 'jar']);
 
-Route::post('uploa2d/md5Check', [Upload2Controller::class, 'md5Check']);
+Route::post('upload2/md5Check', [Upload2Controller::class, 'md5Check']);
 Route::post('upload2/mrp', [Upload2Controller::class, 'mrp']);
 Route::post('upload2/jar', [Upload2Controller::class, 'jar']);
 

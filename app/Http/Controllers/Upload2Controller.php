@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Md5Check;
+use App\Models\MrpApp;
+use App\Models\MrpList;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -32,8 +34,9 @@ class Upload2Controller extends Controller
 
         $md5 = $request->input('md5');
         if ($md5) {
-            $result = DB::selectOne('SELECT `id` FROM `store_app` WHERE `md5` LIKE ?', [$md5]);
-            if ($result) {
+            $count = MrpApp::where('md5', $md5)->count();
+            // $result = DB::selectOne('SELECT `id` FROM `store_mrp_app` WHERE `md5` LIKE ?', [$md5]);
+            if ($count > 0) {
                 //存在
                 echo json_encode(array(
                     'errCode' => 2101,
@@ -109,20 +112,23 @@ class Upload2Controller extends Controller
                 $info['description'] = correct($info['description']);
             }
 
-            $app_info = array(
-                'icon' => $info['appId'],
+            $appInfo = array(
+                'appid' => $info['appId'],
                 'name' => $info['display_name'],
+                'in_name' => $info['nn'],
                 'author' => $info['author'],
                 'description' => $info['description'],
-                'version' => $info['version'],
-                'file_path' => $file_name,
-                'md5' => $temp_md5,
-                'size' => $_FILES["file"]["size"],
-                'addTime' => time()
-            );
 
-            $result = DB::selectOne('SELECT `id` FROM `store_app` WHERE `md5` LIKE ?', [$temp_md5]);
-            if ($result)
+            );
+            $verInfo = [
+                'version' => $info['version'],
+                'path' => $file_name,
+                'md5' => $temp_md5,
+                'size' => $_FILES["file"]["size"]
+            ];
+            // $result = DB::selectOne('SELECT `id` FROM `store_mrp_app` WHERE `md5` LIKE ?', [$temp_md5]);
+            $result = MrpApp::where('md5', $temp_md5)->count();
+            if ($result > 0)
                 throw new Exception("File already exists", 20401);
 
             // 如果没有 upload 目录，你需要创建它，upload 目录权限为 777
@@ -131,19 +137,21 @@ class Upload2Controller extends Controller
             //move_uploaded_file($temp_path, "upload/" . $file_name);
 
             list($upload_result, $msg) = STORAGE::upload($temp_path, array(
-                'storage_path' => $app_info['file_path'],
-                'md5' => $app_info['md5']
+                'storage_path' => $verInfo['path'],
+                'md5' => $verInfo['md5']
             ));
 
             if (!$upload_result)  throw new Exception("文件上传至云端失败 {$msg}", 20401);
 
             //文件上传成功，写入数据库
-            if (false === ($ret = DB::table('store_app')->insertGetId($app_info)))throw new Exception("Add App to Database Failed" , 20401);
+            // 检查MRP列表
+            $listItem = MrpList::firstOrCreate(['appid' => $info['appId']], $appInfo);
+            if (null === $listItem)throw new Exception("Add App to Database Failed1" , 20401);
 
-            $q = "INSERT INTO `store_term_relationships` (`object_id`, `term_taxonomy_id`, `term_order`) VALUES (?, ?, '0')";
-            if (false === DB::insert($q, [$ret, 1]))throw new Exception("bindAppTerm Failed" , 20401);
-            $q = "UPDATE `store_term_taxonomy` SET `count`=`count`+1 WHERE `term_id`=?";
-            if (false === ($ret = DB::update($q, [1]))) throw new Exception("addTermTaxonomyCount Failed", 20401);
+            // 插入MRP APP
+            $verInfo['list_id'] = $listItem->id;
+            $mrpApp = MrpApp::create($verInfo);
+            if (null === $mrpApp)throw new Exception("Add App to Database Failed2" , 20401);
 
             //delete
             unlink($temp_path);
