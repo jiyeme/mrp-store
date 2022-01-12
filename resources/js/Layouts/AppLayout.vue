@@ -22,6 +22,9 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('dashboard')" :active="route().current('applist')">
+                                    应用列表
+                                </jet-nav-link>
                             </div>
                         </div>
 
