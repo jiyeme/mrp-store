@@ -144,7 +144,7 @@
 			var suffix = files[i].name.substr(files[i].name.lastIndexOf('.') + 1);
 
 			$.ajax({
-				url: `/api/upload/${suffix}`,
+				url: `/api/upload2/${suffix}`,
 				type: 'post',
 				data: formData,
 				cache: false,
@@ -187,7 +187,7 @@
 
 			// check MD5
 			$.ajax({
-				url: '/api/upload/md5Check',
+				url: '/api/upload2/md5Check',
 				type: 'post',
 				dataType: 'json',
 				data: {
