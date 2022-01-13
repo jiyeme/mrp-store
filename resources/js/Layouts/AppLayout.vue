@@ -148,6 +148,9 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('applist')" :active="route().current('applist')">
+                            应用列表
+                        </jet-responsive-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -158,8 +161,8 @@
                             </div>
 
                             <div>
-                                <div class="font-medium text-base text-gray-800">{{ $page.props.user.name }}</div>
-                                <div class="font-medium text-sm text-gray-500">{{ $page.props.user.email }}</div>
+                                <div class="font-medium text-base text-gray-800">{{ $page.props?.user?.name ?? '' }}</div>
+                                <div class="font-medium text-sm text-gray-500">{{ $page.props?.user?.email ?? '' }}</div>
                             </div>
                         </div>
 

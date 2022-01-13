@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ mix.webpackConfig({
             type: "javascript/auto"
         }]
     },
+    plugins: [new LiveReloadPlugin()],
 });

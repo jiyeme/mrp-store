@@ -12,6 +12,8 @@ services:
             - 'host.docker.internal:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
+            - '35729:35729'
+            - '3000:3000'
         environment:
             WWWUSER: '1000'
             LARAVEL_SAIL: 1

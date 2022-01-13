@@ -2,17 +2,17 @@
   <div>
     <el-card>
       <el-row type="flex" align="middle">
-        <el-col :span="3">icon</el-col>
-        <el-col :span="18">
+        <el-col :span="5">icon</el-col>
+        <el-col :span="14">
           <el-row>{{appInfo.name}}</el-row>
           <el-row>
             <span class="text">{{appInfo.author}} &nbsp; {{appInfo.updated_at}}更新</span>
           </el-row>
           <el-row>
-            <span class="text">{{appInfo.description}}</span>
+            <span class="text hidden sm:block">{{appInfo.description}}</span>
           </el-row>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="primary">
             <Link :href="route('appinfo', {id: appInfo.id})">查看</Link>
           </el-button>
