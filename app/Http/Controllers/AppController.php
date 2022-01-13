@@ -7,6 +7,7 @@ use App\Models\MrpApp;
 use App\Models\MrpList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class AppController extends Controller
 {
@@ -21,7 +22,7 @@ class AppController extends Controller
         // Get App Info
         $title = "第{$mrpList->currentPage()}页";
 
-        return view('list', [
+        return Inertia::render('App/list', [
             'tags' => [],
             'slug' => $slug,
             'appList' => $appList,
@@ -34,12 +35,12 @@ class AppController extends Controller
         );
     }
 
-    public function info(Request $request, $id){
+    public function info(Request $request, int $id){
         // header("content-type:application/json");
 
-        $mainInfo = MrpList::find($id);
-        $mainInfo->icon = $mainInfo->appid;
-        $verInfo = MrpApp::where('list_id', $mainInfo->id);
+        $appInfo = MrpList::find($id);
+        $appInfo->icon = $appInfo->appid;
+        $verInfo = MrpApp::where('list_id', $appInfo->id);
         /*
         Array
         (
@@ -66,16 +67,16 @@ class AppController extends Controller
         ));
         // var_dump($request->session()->all());
 
-        $title = "{$mainInfo->name} - 下载";
+        $title = "{$appInfo->name} - 下载";
 
-        return view('info', [
+        return Inertia::render('App/detail', [
             'term' => [
                 'slug' => 'MRPAPP',
                 'name' => 'MRP应用'
             ],
             'tags' => [],
             'title' => $title,
-            'ret'=> $mainInfo,
+            'appInfo'=> $appInfo,
             'verList' => $verInfo,
             'id' => $id
         ]);

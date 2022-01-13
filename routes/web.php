@@ -50,7 +50,8 @@ Route::get('/list', function () {
     return view('index');
 });
 
-Route::get('/Store/App/list/slug/{slug}/{page?}', [AppController::class, 'list']);
+Route::get('/App/list', [AppController::class, 'list'])->name('applist');
+Route::get('App/info/{id}', [AppController::class, 'info'])->name('appinfo');
 
 Route::get('/Store/App/info/{id}', [AppController::class, 'info']);
 
