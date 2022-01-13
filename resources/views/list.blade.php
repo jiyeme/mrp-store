@@ -21,6 +21,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] === 1)
             </div>
 
             <?php
+            // 处理应用数组
             if (!isset($appList) || !is_array($appList))
                 exit("异常");
             foreach ($appList as $key => $value) {
@@ -54,9 +55,8 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] === 1)
                 echo "\"><div class=\"alllist_mss\">
                                         <p class=\"list_app_title\">{$value->name}</p>
                                         <p class=\"list_app_info\">{$value->author} &nbsp; ";
-                printf('%.2fKB', ($value->size / 1024));
                 echo " &nbsp;
-                                            <span class=\"list_app_count\">v{$value->version} &nbsp; " . date('Y-m-d H:i:s', $value->addTime) . "更新</span>
+                                            <span class=\"list_app_count\"> &nbsp; {$value->created_at} &nbsp;更新</span>
                                         </p>
                                         <p class=\"list_app_description\">{$value->description}</p>
                                     </div>

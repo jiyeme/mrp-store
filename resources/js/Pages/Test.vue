@@ -9,6 +9,7 @@
                 </div>
                 <h3>政策页面</h3>
                 {{ test_value }}
+                <el-button type="primary">按钮</el-button>
                 <div v-html="policy" class="w-full sm:max-w-2xl mt-6 p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
                 </div>
             </div>
@@ -26,7 +27,7 @@ export default defineComponent({
 
     components: {
         Head,
-        JetAuthenticationCardLogo,
+        JetAuthenticationCardLogo
     },
 })
 </script>

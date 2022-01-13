@@ -4,7 +4,7 @@
 <div class="container">
     <div class="bread_nav">
         <span class="bread_nav_first">
-            <a href="/Store/App/list/slug/{{ $term->slug }}">{{ $term->name }}</a>
+            <a href="/Store/App/list/slug/{{ $term['slug'] }}">{{ $term['name'] }}</a>
         </span>
         / <span class="bread_nav_second">
             <a href="javascript:void(0);">{{ $ret->name }}</a>
@@ -178,9 +178,9 @@
                     <p class="apk_left_title_nav">分类标签</p>
                     <p>
                         <?php
-                        foreach ($ret->tags as $key => $value) {
-                            echo "<a href=\"/Store/App/list/slug/{$key}\"><span class=\"apk_left_span2\">{$value}</span></a>";
-                        }
+                        // foreach ($ret->tags as $key => $value) {
+                        //     echo "<a href=\"/Store/App/list/slug/{$key}\"><span class=\"apk_left_span2\">{$value}</span></a>";
+                        // }
                         ?>
                     </p>
                 </div>

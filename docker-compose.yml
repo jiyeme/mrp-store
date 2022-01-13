@@ -16,11 +16,12 @@ services:
             WWWUSER: '1000'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-debug,profile,trace}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=172.17.0.1}'
         volumes:
             - '.:/var/www/html'
         networks:
             - sail
+            # /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 networks:
     sail:
         driver: bridge
