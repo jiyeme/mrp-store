@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="my-12 bg-white flex justify-center">
-            <el-pagination background layout="prev, pager, next" v-model:current-page="pageData.current" :total="pageData.total"></el-pagination>
+            <el-pagination background layout="prev, pager, next" v-model:current-page="pageData.current" v-model:page-size="pageData.pageSize" :total="pageData.total"></el-pagination>
         </div>
       </div>
     </div>
@@ -34,6 +34,7 @@ export default defineComponent({
     ListItem,
   },
   mounted(){
+      console.log('pageData', this.$props.pageData)
   },
   watch: {
       'pageData.current': (newVal, oldVal)=>{

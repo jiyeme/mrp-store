@@ -72001,7 +72001,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.defineComponent)({
-  props: ["title", 'appInfo', 'verList', 'icon', 'captchaKey'],
+  props: ["title", "appInfo", "verList", "icon", "captchaKey"],
   components: {
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     VerItem: _components_VerItem_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -72036,51 +72036,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   methods: {
-    reCaptcha: function () {
-      var _reCaptcha = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2() {
+    download: function () {
+      var _download = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(verInfo, done) {
+        var token, listId, verId, result, resp, _resp$msg;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function reCaptcha() {
-        return _reCaptcha.apply(this, arguments);
-      }
-
-      return reCaptcha;
-    }(),
-    download: function () {
-      var _download = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee3(verInfo, done) {
-        var token, listId, verId, result, resp, _resp$msg;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
+                _context2.prev = 0;
                 console.log(this.$props.captchaKey);
-                _context3.next = 3;
-                return this.recaptcha.execute('download');
+                _context2.next = 4;
+                return this.recaptcha.execute("download");
 
-              case 3:
-                token = _context3.sent;
+              case 4:
+                token = _context2.sent;
                 listId = verInfo.list_id;
                 verId = verInfo.id;
-                _context3.next = 8;
-                return axios__WEBPACK_IMPORTED_MODULE_5___default().post('/api/download', {
+                _context2.next = 9;
+                return axios__WEBPACK_IMPORTED_MODULE_5___default().post("/api/download", {
                   listId: listId,
                   verId: verId,
                   token: token,
                   password: 1
                 });
 
-              case 8:
-                result = _context3.sent;
+              case 9:
+                result = _context2.sent;
                 // console.log(result)
                 done();
                 resp = result.data;
@@ -72088,23 +72070,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (resp.code === 200) {
                   // 成功
                   (0,element_plus_es__WEBPACK_IMPORTED_MODULE_7__.ElMessage)({
-                    message: '开始下载',
-                    type: 'success'
+                    message: "开始下载",
+                    type: "success"
                   });
                   window.open(resp.msg);
                 } else {
                   (0,element_plus_es__WEBPACK_IMPORTED_MODULE_7__.ElMessage)({
-                    message: (_resp$msg = resp === null || resp === void 0 ? void 0 : resp.msg) !== null && _resp$msg !== void 0 ? _resp$msg : '错误',
-                    type: 'error'
+                    message: (_resp$msg = resp === null || resp === void 0 ? void 0 : resp.msg) !== null && _resp$msg !== void 0 ? _resp$msg : "错误",
+                    type: "error"
                   });
                 }
 
-              case 12:
+                _context2.next = 19;
+                break;
+
+              case 15:
+                _context2.prev = 15;
+                _context2.t0 = _context2["catch"](0);
+                done();
+                (0,element_plus_es__WEBPACK_IMPORTED_MODULE_7__.ElMessage)({
+                  message: "错误",
+                  type: "error"
+                });
+
+              case 19:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this, [[0, 15]]);
       }));
 
       function download(_x, _x2) {
@@ -72143,7 +72137,9 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ListItem: _components_ListItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log('pageData', this.$props.pageData);
+  },
   watch: {
     'pageData.current': function pageDataCurrent(newVal, oldVal) {
       console.log(newVal, oldVal);
@@ -75817,7 +75813,7 @@ var _hoisted_12 = {
   "class": "mt-4 sm:mt-0 sm:w-2/6"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_4__.createTextVNode)(" Aside ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_4__.createTextVNode)("Aside");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_el_image = element_plus_es__WEBPACK_IMPORTED_MODULE_5__.ElImage;
@@ -75894,7 +75890,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-4"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_4__.withCtx)(function () {
-          return [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_4__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_4__.toDisplayString)(_ctx.appInfo.description), 1
+          return [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_4__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_4__.toDisplayString)(_ctx.appInfo.description) + " ", 1
           /* TEXT */
           ), _hoisted_9, _hoisted_10, _hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_4__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_4__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_4__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_4__.renderList)(_ctx.verList, function (ver) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_4__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_4__.createElementBlock)("div", {
@@ -75995,10 +75991,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:current-page": _cache[0] || (_cache[0] = function ($event) {
           return _ctx.pageData.current = $event;
         }),
+        "page-size": _ctx.pageData.pageSize,
+        "onUpdate:page-size": _cache[1] || (_cache[1] = function ($event) {
+          return _ctx.pageData.pageSize = $event;
+        }),
         total: _ctx.pageData.total
       }, null, 8
       /* PROPS */
-      , ["current-page", "total"])])])])];
+      , ["current-page", "page-size", "total"])])])])];
     }),
     _: 1
     /* STABLE */
