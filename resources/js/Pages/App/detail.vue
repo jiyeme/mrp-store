@@ -58,7 +58,9 @@ export default defineComponent({
   },
   mounted(){
       (async ()=>{
-        this.recaptcha = await load(this.$props.captchaKey)
+        this.recaptcha = await load(this.$props.captchaKey, {
+            useRecaptchaNet: true
+        })
       })()
   },
   methods: {
