@@ -11,7 +11,9 @@
           <div v-for="item in appList" v-bind:key="item.id">
             <list-item :appInfo="item" />
           </div>
-          {{ title }}
+        </div>
+        <div class="my-12 bg-white flex justify-center">
+            <el-pagination background layout="prev, pager, next" v-model:current-page="pageData.current" :total="pageData.total"></el-pagination>
         </div>
       </div>
     </div>
@@ -22,17 +24,28 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ListItem from "./components/ListItem.vue";
+import { Inertia } from '@inertiajs/inertia'
 
 export default defineComponent({
-  props: ["title", "appList"],
+  props: ["title", "appList", 'pageData'],
 
   components: {
     AppLayout,
     ListItem,
   },
-  methods: {
-
-  }
+  mounted(){
+  },
+  watch: {
+      'pageData.current': (newVal, oldVal)=>{
+          console.log(newVal, oldVal)
+          Inertia.visit('', {
+              data: {
+                  page: newVal
+              }
+          })
+      }
+  },
+  methods: {},
 });
 </script>
 

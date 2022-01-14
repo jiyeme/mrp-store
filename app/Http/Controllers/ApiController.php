@@ -425,7 +425,7 @@ class ApiController extends Controller
         $total = 0;
         if(empty($rows))
         {
-            $sql = "SELECT * FROM `store_mrp+list` WHERE `author` LIKE ? LIMIT ?, ?";
+            $sql = "SELECT * FROM `store_mrp_list` WHERE `author` LIKE ? LIMIT ?, ?";
             $query = DB::select($sql, ["%$key%", $start, $count]);
             $i = 0;
             $rows = array();

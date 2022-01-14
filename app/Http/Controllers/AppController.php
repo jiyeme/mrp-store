@@ -12,7 +12,7 @@ use Inertia\Inertia;
 class AppController extends Controller
 {
     //
-    public function list($slug, $page = 1)
+    public function list(Request $request, $slug, $page = 1)
     {
 
         $mrpList = MrpList::paginate(20);
@@ -32,13 +32,16 @@ class AppController extends Controller
         // Get App Info
         $title = "第{$mrpList->currentPage()}页";
 
+        $pageData = [
+            'current' => $mrpList->currentPage(),
+            'total' => $mrpList->total(),
+            'lastPage' => $mrpList->lastPage()
+        ];
         return Inertia::render('App/list', [
             'tags' => [],
             'slug' => $slug,
             'appList' => $appList,
-            'total_page' => $mrpList->total(),
-            'page' => $page,
-            'term' =>  [],
+            'pageData' => $pageData,
             'title' =>  $title,
             'count' =>  $mrpList->count()
             ]
