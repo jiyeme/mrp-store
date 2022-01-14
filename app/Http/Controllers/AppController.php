@@ -40,32 +40,27 @@ class AppController extends Controller
 
         $appInfo = MrpList::find($id);
         $appInfo->icon = $appInfo->appid;
-        $verInfo = MrpApp::where('list_id', $appInfo->id);
-        /*
-        Array
-        (
-            [id] => 11474
-            [version] => 101
-            [name] => 计算器老虎版
-            [author] => 老虎会游泳
-            [description] => 计算器老虎会游泳开发，编译于2020.10.26
-            [appId] => 30043
-            [ch] => e6c1ec341
-            [file_path] => mrpApp/计算器老虎版_52828a308400ea223128acc523e9b429.mrp
-            [md5] => 52828a308400ea223128acc523e9b429
-            [size] => 252666
-            [addTime] => 1603815891
-            [tags] => Array
-                (
-                )
+        $icon = null;
+        if(strlen($appInfo->icon)>10)
+            // jar
+            $icon = file_exists(app_path("public/{$appInfo->icon}"))? $appInfo->icon:"/assets/img/jar-icon.png";
+        else if (file_exists(app_path('/public/assets/img/app/' . strtoupper(base_convert($appInfo->icon, 10, 32)) . '.bmp')))
+            $icon = '/assets/img/app/' . strtoupper(base_convert($appInfo->icon, 10, 32)) . '.bmp';
+        else
+            $icon = '/assets/img/mrp-icon.png';
 
-        )
-        */
+        $verInfo = MrpApp::where('list_id', $appInfo->id)->get();
 
+        $verList = [];
+        foreach($verInfo as $ver){
+            $verList[$ver->id] = $ver->path;
+        }
+
+        header("content-type: application/json");
         $request->session()->put('dowload_info', array(
-            'id' => $id
+            'id' => $id,
+            'verList' => $verList
         ));
-        // var_dump($request->session()->all());
 
         $title = "{$appInfo->name} - 下载";
 
@@ -78,7 +73,9 @@ class AppController extends Controller
             'title' => $title,
             'appInfo'=> $appInfo,
             'verList' => $verInfo,
-            'id' => $id
+            'id' => $id,
+            'icon' => $icon,
+            'captchaKey' => env('reCAPTCHA_site_key')
         ]);
     }
 }

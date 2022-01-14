@@ -15,11 +15,12 @@ class ApiController extends Controller
 
         try {
             //code...
-            $token = $request->input('token');
-            $id = $request->input('id');
-            $password = $request->input('password');
+            $token = $request->get('token');
+            $listId = $request->get('listId');
+            $verId = $request->get('verId');
+            $password = $request->get('password');
 
-            if (!$token || !$id || !$password) {
+            if (!$token || !$listId || !$verId || !$password) {
                 throw new Exception("非法请求！", 403);
             }
             $downloadinfo = $request->session()->get('dowload_info');
@@ -28,7 +29,7 @@ class ApiController extends Controller
             if (null === $downloadinfo) {
                 throw new Exception("数据丢失！请刷新页面！", 404);
             }
-            if ($downloadinfo['id'] != $id) {
+            if ($downloadinfo['id'] !== $listId) {
                 throw new Exception("操作异常，请刷新页面重试！", 403);
             }
 
@@ -62,7 +63,7 @@ class ApiController extends Controller
 
             $out = array(
                 'code' => 200,
-                'msg' => str_replace('//', '/', "/{$downloadinfo['path']}")
+                'msg' => str_replace('//', '/', "/{$downloadinfo['verList'][$verId]}")
             );
 
             if(!env('STORAGE_QINIU_ENABLE')){

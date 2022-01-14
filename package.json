@@ -29,6 +29,7 @@
         "webpack-livereload-plugin": "^3.0.2"
     },
     "dependencies": {
-        "element-plus": "^1.2.0-beta.6"
+        "element-plus": "^1.2.0-beta.6",
+        "vue-recaptcha-v3": "^2.0.1"
     }
 }

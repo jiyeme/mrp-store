@@ -139,6 +139,7 @@ class QiniuStorage
         $auth = new Auth(env('STORAGE_QINIU_AK'), env('STORAGE_QINIU_SK'));
         $config = new \Qiniu\Config();
         $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
+        // 自己实现的方法
         list($res, $err) = $bucketManager->offlineDomain('mrp-cdn.jysafe.cn');
         if($err != null){
 
@@ -154,6 +155,7 @@ class QiniuStorage
         $auth = new Auth(env('STORAGE_QINIU_AK'), env('STORAGE_QINIU_SK'));
         $config = new \Qiniu\Config();
         $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
+        // 自己实现的方法
         list($res, $err) = $bucketManager->onlineDomain('mrp-cdn.jysafe.cn');
         if($err != null){
 
@@ -198,6 +200,6 @@ class QiniuStorage
     {
         //初始化签权对象
         $auth = new Auth($this->accessKey, $this->secretKey);
-        return $auth->privateDownloadUrl($baseUrl, 60);
+        return $auth->privateDownloadUrl($baseUrl, 30);
     }
 }

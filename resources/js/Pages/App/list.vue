@@ -21,7 +21,7 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import ListItem from "./components/item.vue";
+import ListItem from "./components/ListItem.vue";
 
 export default defineComponent({
   props: ["title", "appList"],
