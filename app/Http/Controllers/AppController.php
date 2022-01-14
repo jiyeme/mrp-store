@@ -19,6 +19,16 @@ class AppController extends Controller
 
         $appList = $mrpList->items();
 
+        foreach($appList as $app){
+            if(strlen($app->appid)>10)
+                // jar
+                $app->icon = file_exists(app_path("public/{$app->appid}"))? $app->appid:"/assets/img/jar-icon.png";
+            else if (file_exists(app_path('/public/assets/img/app/' . strtoupper(base_convert($app->appid, 10, 32)) . '.bmp')))
+                $app->icon = '/assets/img/app/' . strtoupper(base_convert($app->appid, 10, 32)) . '.bmp';
+            else
+                $app->icon = '/assets/img/mrp-icon.png';
+        }
+
         // Get App Info
         $title = "第{$mrpList->currentPage()}页";
 

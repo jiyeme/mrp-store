@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MrpApp;
+use App\Models\MrpList;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -131,34 +133,33 @@ class ApiController extends Controller
         //     }
         // }
 
-        $fluxEnd = 0;
-        $download_domain = 'mrp-cdn.jysafe.cn';
-
         $action = $request->get('action');
         $appid = $request->get('appid');
 
         $type = $request->get('type');
         $slug = 'MRPAPP';
 
-
         if ($action == null)
             die;
 
-        $term = DB::selectOne("SELECT b.count, a.name FROM `store_terms` a, `store_term_taxonomy` b WHERE a.term_id=b.term_id AND a.slug=?", [$slug]);
+        // $term = DB::selectOne("SELECT b.count, a.name FROM `store_terms` a, `store_term_taxonomy` b WHERE a.term_id=b.term_id AND a.slug=?", [$slug]);
         $outPut = array();
 
         switch ($action) {
             case 'searchApp':
-                $outPut = $this->API_searchApp($request);
+                // 搜索
+                $outPut = $this->API_searchAppV2($request);
                 break;
             case 'lsApp':
-                $res = $this->API_lsApp($request);
+                // 获取MRP列表
+                $res = $this->API_lsAppV2($request);
                 $outPut = array(
-                    'total' => $term->count,
-                    'rows' => $res
+                    'total' => $res['total'],
+                    'rows' => $res['list']
                 );
                 break;
             case 'lsMrp':
+                // 获取版本列表
                 if ($appid == 0) {
                     $outPut = array(
                         'total' => 0,
@@ -166,7 +167,7 @@ class ApiController extends Controller
                     );
                     break;
                 }
-                $res = $this->API_lsMrp($request);
+                $res = $this->API_lsMrpV2($request);
                 $outPut = array(
                     'total' => count($res),
                     'rows' => $res
@@ -199,7 +200,7 @@ class ApiController extends Controller
         echo json_encode($outPut);
     }
 
-    // ===============API=======================
+    // ===============API Deprecated=======================
     //搜索
     public function API_searchApp(Request $request) {
         // GET--->{"action":"searchApp","start":"0","count":"10"}POST--->{"key":"qq","type":"lebel"}
@@ -292,6 +293,7 @@ class ApiController extends Controller
          * */
         $type = $request->get('type', 0);
         $slugs = ['MRPAPP'];
+
         if($type == 0)$slugs=['comm'];
         else if($type == 2)$slugs=['software'];
         else if($type == 3)$slugs=['game'];
@@ -392,6 +394,176 @@ class ApiController extends Controller
         return $array_content;
     }
     // ===============API END================
+
+
+    // ===============API V2=======================
+    //搜索
+    public function API_searchAppV2(Request $request) {
+        // QUERY--->{"action":"searchApp","start":"0","count":"10"}POST--->{"key":"qq","type":"lebel"}
+        $start = $request->get('start', 0);
+        $count = $request->get('count', 10);
+        $key = $request->get('key', '');
+        $type = $request->get('type');
+        $sql = "SELECT * FROM `store_mrp_list` WHERE `name` LIKE ? LIMIT ?, ?";
+
+        $query = DB::select($sql, ["%$key%", $start, $count]);
+        $i = 0;
+        $rows = array();
+        foreach ($query as $row) {
+            $rows[$i++] = array(
+                '_id' => $row->id,
+                'appid' => $row->appid,
+                'label' => $row->name,
+                'name' => 'name',
+                'vendor' => $row->author,
+                'desc' => $row->description,
+                'flag' => '1',
+                'addTime' => date('Y-m-d', strtotime($row->created_at))
+            );
+        }
+
+        $total = 0;
+        if(empty($rows))
+        {
+            $sql = "SELECT * FROM `store_mrp+list` WHERE `author` LIKE ? LIMIT ?, ?";
+            $query = DB::select($sql, ["%$key%", $start, $count]);
+            $i = 0;
+            $rows = array();
+            foreach ($query as $row) {
+                if(strlen($row['icon'])<10)
+                    $rows[$i++] = array(
+                        '_id' => $row->id,
+                        'appid' => $row->icon,
+                        'label' => $row->name,
+                        'name' => 'name',
+                        'vendor' => $row->author,
+                        'desc' => $row->description,
+                        'flag' => '1',
+                        'addTime' => date('Y-m-d', strtotime($row->created_at))
+                    );
+            }
+            //计算数目
+            $sql = "SELECT COUNT(1) FROM `store_mrp_list` WHERE `author` LIKE ? ";
+            $query = DB::selectOne($sql, ["'%$key%'"]);
+
+            $total = $query->{'COUNT(1)'};
+        }
+
+        if($total === 0){
+            //计算数目
+            $sql = "SELECT COUNT(1) FROM `store_mrp_list` WHERE `name` LIKE ? ";
+            $query = DB::selectOne($sql, ["'%$key%'"]);
+            $total = $query->{'COUNT(1)'};
+        }
+
+        return array('total' => $total, 'rows' => $rows);
+    }
+
+    //MRP应用列表
+    public function API_lsAppV2(Request $request) {
+
+        $array_content = array();
+        /////////////////////流量耗尽////////////////
+        // global $fluxEnd;
+        // if($fluxEnd){
+        //     $array_content[0] = array(
+        //         '_id' => '0',
+        //         'appid' => '0',
+        //         'label' => '公告-流量耗尽',
+        //         'name' => '公告-流量耗尽',
+        //         'vendor' => '祭夜 于 ' . date('Y-m-d') . ' 发布',
+        //         'desc' => '云存储流量耗尽，停止下载服务，下月初恢复',
+        //         'flag' => '1',
+        //         'addTime' => '2020-02-27 13:35'
+        //     );
+        //     return $array_content;
+        // }
+        /////////////////////流量耗尽END////////////////
+
+        //GET--->{"action":"lsApp","start":"0","count":"10","type":"0"}
+        $start = $request->get('start', 0);
+        $count = $request->get('count', 10);
+
+        /**
+         * @type 0 必备|1 最新|2 软件|3 游戏
+         * */
+        $type = $request->get('type', 0);
+
+        $perPage = $count;
+        $columns = ['*'];
+        $pageName = 'page';
+
+        $list = MrpList::paginate($perPage, $columns, $pageName, $start);
+        $id = 0;
+
+        if($start == 0)
+        {
+            $array_content[0] = array(
+                '_id' => '0',
+                'appid' => '0',
+                'label' => '公告-搜索已修复',
+                'name' => '公告-搜索已修复',
+                'vendor' => 'msojocs',
+                'desc' => "搜索已修复\nmrp.jysafe.cn现已支持JAVA软游",
+                'flag' => '1',
+                'addTime' => '2021-03-21 16:00'
+            );
+            // $array_content[1] = array(
+            //     '_id' => '0',
+            //     'appid' => '0',
+            //     'label' => '公告-祝攻击者没有后代',
+            //     'name' => '公告-还有一件事',
+            //     'vendor' => '祭夜',
+            //     'desc' => "仅此而已",
+            //     'flag' => '1',
+            //     'addTime' => '2020-10-06 09:37'
+            // );
+            $id = 1;
+
+        }
+        if($list)
+            foreach ($list as $row) {
+                $array_content[$id++] = array(
+                    '_id' => $row->id,
+                    'appid' => $row->appid,
+                    'label' => $row->name,
+                    'name' => 'name',
+                    'vendor' => $row->author,
+                    'desc' => $row->description,
+                    'flag' => '1',
+                    'addTime' => date('Y-m-d H:i:s', strtotime($row->created_at))
+                );
+            }
+        return ['list' => $array_content, 'total' => $list->total()];
+    }
+
+    //MRP应用详情
+    public function API_lsMrpV2(Request $request) {
+
+        //GET--->{"action":"lsMrp","appid":"830090"}
+        $listId = $request->get('appid', 0);
+
+        $verList = MrpApp::where('list_id', $listId)->get();
+
+        $array_content = array();
+        foreach ($verList as $row) {
+
+            $array_content[] = array(
+                //应用界面不显示，用于点击后显示版本信息
+                'appid' => $row->id,
+                'mr_appid' => $listId,
+                '_id' => $row->id,
+                'md5' => $row->md5,
+                'ver' => $row->version,
+                'url' => 'http://mrp-cdn.jysafe.cn/' . $row->path,
+                'desc' => '00000',
+                'addTime' => date('Y-m-d H:i:s', strtotime($row->created_at)),
+                'fsize' => $row->size / 1024 . 'kb',
+            );
+        }
+        return $array_content;
+    }
+    // ===============APIV2 END================
 
     /**
      * 获取MRP个数

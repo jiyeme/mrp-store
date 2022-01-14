@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <el-row type="flex" align="middle">
-        <el-col :span="5">icon</el-col>
+        <el-col :span="5"><el-image :src="appInfo.icon" class="w-20"></el-image></el-col>
         <el-col :span="14">
           <el-row>{{appInfo.name}}</el-row>
           <el-row>

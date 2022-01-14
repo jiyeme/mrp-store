@@ -26,7 +26,7 @@
             <!--        </div>-->
             <!--    </div>-->
             <!--</a>-->
-            <a href="/Store/App/list/slug/MRPAPP">
+            <a href="/App/list">
                 <div class="alllist_app">
                     <div class="alllist_app_side">
                         <img class="alllist_img" src="/assets/img/mrp-icon.png">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/Store/App/list/slug/JAVAAPP">
+            {{-- <a href="/Store/App/list/slug/JAVAAPP">
                 <div class="alllist_app">
                     <div class="alllist_app_side">
                         <img class="alllist_img" src="/assets/img/jar-icon.png">
@@ -55,7 +55,7 @@
                         <button class="alllist_btn">进入</button>
                     </div>
                 </div>
-            </a>
+            </a> --}}
 
             <div class="panel-footer ex-card-footer text-center">
                 <ul class="pagination">

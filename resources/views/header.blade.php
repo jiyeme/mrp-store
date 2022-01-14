@@ -90,14 +90,15 @@
                     </a>
                     <ul class="nav">
                         <li id="navbar-homepage"><a href="/">首页</a></li>
-                        <li>
+                        <li id="sub-menu"><a href="/App/list">应用列表</a></li>
+                        {{-- <li>
                             <ul id="sub-menu" class="sub-menu">
                                 <li id="navbar-cat" style="visibility:visible"><a href="#">分类</a></li>
                                 <li id="navbar-mrpapp"><a href="/Store/App/list/slug/MRPAPP">MRP软游</a></li>
                                 <li id="navbar-jarapp"><a href="/Store/App/list/slug/JAVAAPP">Java软游</a></li>
                                 <li id="navbar-help"><a href="https://www.jysafe.cn/4132.air" target="_blank">帮助</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li id="navbar-upload"><a href="/upload">上传</a></li>
                         <li id="navbar-support"><a href="/support">支持赞助</a></li>
                         <li><a href="https://jq.qq.com/?_wv=1027&k=vGaiy4Hg">加群反馈问题</a></li>
