@@ -489,11 +489,7 @@ class ApiController extends Controller
          * */
         $type = $request->get('type', 0);
 
-        $perPage = $count;
-        $columns = ['*'];
-        $pageName = 'page';
-
-        $list = MrpList::paginate($perPage, $columns, $pageName, $start);
+        $list = MrpList::offset($start)->limit($count);
         $id = 0;
 
         if($start == 0)
