@@ -57,7 +57,8 @@ class AppMagController extends Controller
     }
 
     // DELTETE 删除版本
-    public function delVer(){
-
+    public function delVer($id){
+        $result = MrpApp::find($id)->delete();
+        return ['result' => $result];
     }
 }

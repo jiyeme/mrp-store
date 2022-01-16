@@ -81782,11 +81782,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/message/index.mjs");
+/* harmony import */ var element_plus_es_components_message_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! element-plus/es/components/message/style/css */ "./node_modules/element-plus/es/components/message/style/css.mjs");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
 /* unplugin-vue-components disabled */
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.defineComponent)({
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.defineComponent)({
   props: {
     appDetail: {
       type: Object,
@@ -81802,7 +81817,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -81820,9 +81835,55 @@ __webpack_require__.r(__webpack_exports__);
     for (var _i = 0, _attrs = attrs; _i < _attrs.length; _i++) {
       var attr = _attrs[_i];
       this.app[attr] = ori[attr];
-    }
+    } // console.log(this.$props.verList)
 
-    console.log(this.$props.verList);
+  },
+  methods: {
+    delVer: function () {
+      var _delVer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(id) {
+        var res, resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default()["delete"](route('verDelete', {
+                  id: id
+                }));
+
+              case 2:
+                res = _context.sent;
+                resp = res.data;
+
+                if (resp.result) {
+                  // success
+                  (0,element_plus_es__WEBPACK_IMPORTED_MODULE_6__.ElMessage)({
+                    message: '删除成功,重载数据',
+                    type: 'success'
+                  });
+                  _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.visit('');
+                } else {
+                  // failed
+                  (0,element_plus_es__WEBPACK_IMPORTED_MODULE_6__.ElMessage)({
+                    message: '删除失败',
+                    type: 'error'
+                  });
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function delVer(_x) {
+        return _delVer.apply(this, arguments);
+      }
+
+      return delVer;
+    }()
   }
 }));
 
@@ -81882,8 +81943,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     }
   },
-  mounted: function mounted() {
-    console.log(this.$props);
+  mounted: function mounted() {// console.log(this.$props);
   },
   methods: {
     viewDetail: function viewDetail() {},
@@ -81894,13 +81954,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(id);
-                _context.next = 3;
+                _context.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default()["delete"]("/dash/appDelete/".concat(id));
 
-              case 3:
+              case 2:
                 result = _context.sent;
-                console.log(result);
+                // console.log(result)
                 resp = result.data;
 
                 if (resp[1]) {
@@ -81918,7 +81977,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-              case 7:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -86367,16 +86426,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var element_plus_es_components_form_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! element-plus/es/components/form/style/css */ "./node_modules/element-plus/es/components/form/style/css.mjs");
 /* harmony import */ var element_plus_es_components_table_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-plus/es/components/table/style/css */ "./node_modules/element-plus/es/components/table/style/css.mjs");
-/* harmony import */ var element_plus_es_components_table_column_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! element-plus/es/components/table-column/style/css */ "./node_modules/element-plus/es/components/table-column/style/css.mjs");
-/* harmony import */ var element_plus_es_components_divider_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! element-plus/es/components/divider/style/css */ "./node_modules/element-plus/es/components/divider/style/css.mjs");
-/* harmony import */ var element_plus_es_components_form_item_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-plus/es/components/form-item/style/css */ "./node_modules/element-plus/es/components/form-item/style/css.mjs");
-/* harmony import */ var element_plus_es_components_input_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-plus/es/components/input/style/css */ "./node_modules/element-plus/es/components/input/style/css.mjs");
-/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/form/index.mjs");
-/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/table/index.mjs");
-/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/divider/index.mjs");
-/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/input/index.mjs");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var element_plus_es_components_popconfirm_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! element-plus/es/components/popconfirm/style/css */ "./node_modules/element-plus/es/components/popconfirm/style/css.mjs");
+/* harmony import */ var element_plus_es_components_button_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! element-plus/es/components/button/style/css */ "./node_modules/element-plus/es/components/button/style/css.mjs");
+/* harmony import */ var element_plus_es_components_table_column_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-plus/es/components/table-column/style/css */ "./node_modules/element-plus/es/components/table-column/style/css.mjs");
+/* harmony import */ var element_plus_es_components_divider_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-plus/es/components/divider/style/css */ "./node_modules/element-plus/es/components/divider/style/css.mjs");
+/* harmony import */ var element_plus_es_components_form_item_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-plus/es/components/form-item/style/css */ "./node_modules/element-plus/es/components/form-item/style/css.mjs");
+/* harmony import */ var element_plus_es_components_input_style_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! element-plus/es/components/input/style/css */ "./node_modules/element-plus/es/components/input/style/css.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/form/index.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/table/index.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/popconfirm/index.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/button/index.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/divider/index.mjs");
+/* harmony import */ var element_plus_es__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! element-plus/es */ "./node_modules/element-plus/es/components/input/index.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* unplugin-vue-components disabled */
+
+
 
 
 
@@ -86386,33 +86451,40 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "m-10"
 };
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_8__.createTextVNode)("删除");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_el_input = element_plus_es__WEBPACK_IMPORTED_MODULE_7__.ElInput;
+  var _component_el_input = element_plus_es__WEBPACK_IMPORTED_MODULE_9__.ElInput;
 
-  var _component_el_form_item = element_plus_es__WEBPACK_IMPORTED_MODULE_8__.ElFormItem;
+  var _component_el_form_item = element_plus_es__WEBPACK_IMPORTED_MODULE_10__.ElFormItem;
 
-  var _component_el_divider = element_plus_es__WEBPACK_IMPORTED_MODULE_9__.ElDivider;
+  var _component_el_divider = element_plus_es__WEBPACK_IMPORTED_MODULE_11__.ElDivider;
 
-  var _component_el_table_column = element_plus_es__WEBPACK_IMPORTED_MODULE_10__.ElTableColumn;
+  var _component_el_table_column = element_plus_es__WEBPACK_IMPORTED_MODULE_12__.ElTableColumn;
 
-  var _component_el_table = element_plus_es__WEBPACK_IMPORTED_MODULE_10__.ElTable;
+  var _component_el_button = element_plus_es__WEBPACK_IMPORTED_MODULE_13__.ElButton;
 
-  var _component_el_form = element_plus_es__WEBPACK_IMPORTED_MODULE_8__.ElForm;
+  var _component_el_popconfirm = element_plus_es__WEBPACK_IMPORTED_MODULE_14__.ElPopconfirm;
 
-  var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_6__.resolveComponent)("app-layout");
+  var _component_el_table = element_plus_es__WEBPACK_IMPORTED_MODULE_12__.ElTable;
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_6__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createBlock)(_component_app_layout, null, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_form, {
+  var _component_el_form = element_plus_es__WEBPACK_IMPORTED_MODULE_10__.ElForm;
+
+  var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_8__.resolveComponent)("app-layout");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_8__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createBlock)(_component_app_layout, null, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_form, {
         model: _ctx.app
       }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_form_item, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_form_item, {
             label: "应用id",
             prop: "appid"
           }, {
-            "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_input, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_input, {
                 type: "text",
                 modelValue: _ctx.app.appid,
                 "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -86425,12 +86497,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
             /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_form_item, {
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_form_item, {
             label: "应用名称",
             prop: "name"
           }, {
-            "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_input, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_input, {
                 modelValue: _ctx.app.name,
                 "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
                   return _ctx.app.name = $event;
@@ -86442,12 +86514,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
             /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_form_item, {
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_form_item, {
             label: "应用介绍",
             prop: "description"
           }, {
-            "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_input, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_input, {
                 modelValue: _ctx.app.description,
                 "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
                   return _ctx.app.description = $event;
@@ -86459,18 +86531,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
             /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_divider), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_table, {
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_divider), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_table, {
             data: _ctx.verList
           }, {
-            "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_table_column, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_table_column, {
                 prop: "version",
                 label: "版本"
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_6__.createVNode)(_component_el_table_column, {
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_table_column, {
                 label: "操作"
               }, {
-                "default": (0,vue__WEBPACK_IMPORTED_MODULE_6__.withCtx)(function (scope) {
-                  return [];
+                "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function (scope) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_popconfirm, {
+                    title: "确定删除该版本？",
+                    onConfirm: function onConfirm($event) {
+                      return _ctx.delVer(scope.row.id);
+                    }
+                  }, {
+                    reference: (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+                      return [(0,vue__WEBPACK_IMPORTED_MODULE_8__.createVNode)(_component_el_button, {
+                        type: "danger",
+                        size: "small"
+                      }, {
+                        "default": (0,vue__WEBPACK_IMPORTED_MODULE_8__.withCtx)(function () {
+                          return [_hoisted_2];
+                        }),
+                        _: 1
+                        /* STABLE */
+
+                      })];
+                    }),
+                    _: 2
+                    /* DYNAMIC */
+
+                  }, 1032
+                  /* PROPS, DYNAMIC_SLOTS */
+                  , ["onConfirm"])];
                 }),
                 _: 1
                 /* STABLE */
@@ -86532,11 +86628,9 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_5__.createTextVNode)("详情");
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_5__.createTextVNode)("编辑");
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_5__.createTextVNode)("删除");
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_5__.createTextVNode)("删除");
-
-var _hoisted_5 = {
+var _hoisted_4 = {
   "class": "flex justify-center bg-white py-4"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -86581,7 +86675,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_table_column, {
             fixed: "right",
             label: "操作",
-            width: "250"
+            width: "200"
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_5__.withCtx)(function (scope) {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_button, {
@@ -86609,16 +86703,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }, 1032
               /* PROPS, DYNAMIC_SLOTS */
-              , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_button, {
-                size: "small"
-              }, {
-                "default": (0,vue__WEBPACK_IMPORTED_MODULE_5__.withCtx)(function () {
-                  return [_hoisted_3];
-                }),
-                _: 1
-                /* STABLE */
-
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_popconfirm, {
+              , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_popconfirm, {
                 title: "此操作将会删除应用所有相关数据!",
                 onConfirm: function onConfirm($event) {
                   return _ctx.delApp(scope.row.id);
@@ -86630,7 +86715,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     size: "small"
                   }, {
                     "default": (0,vue__WEBPACK_IMPORTED_MODULE_5__.withCtx)(function () {
-                      return [_hoisted_4];
+                      return [_hoisted_3];
                     }),
                     _: 1
                     /* STABLE */
@@ -86654,7 +86739,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createCommentVNode)(" 分页导航 "), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_pagination, {
+      , ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createCommentVNode)(" 分页导航 "), (0,vue__WEBPACK_IMPORTED_MODULE_5__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_5__.createVNode)(_component_el_pagination, {
         background: "",
         layout: "prev, pager, next",
         "current-page": _ctx.currPage,

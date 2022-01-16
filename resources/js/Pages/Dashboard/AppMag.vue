@@ -7,10 +7,9 @@
         <el-table-column prop="appid" label="应用id" width="180" />
         <el-table-column prop="name" label="名称" width="180" />
         <el-table-column prop="created_at" label="创建时间" />
-        <el-table-column fixed="right" label="操作" width="250">
+        <el-table-column fixed="right" label="操作" width="200">
           <template #default="scope">
             <el-button size="small" @click="viewDetail"><Link :href="route('appDetail', {id: scope.row.id})" >详情</Link></el-button>
-            <el-button size="small">编辑</el-button>
             <el-popconfirm title="此操作将会删除应用所有相关数据!" @confirm="delApp(scope.row.id)">
                 <template #reference>
                     <el-button type="danger" size="small">删除</el-button>
@@ -63,14 +62,14 @@ export default defineComponent({
     },
   },
   mounted() {
-    console.log(this.$props);
+    // console.log(this.$props);
   },
   methods: {
     viewDetail: function () {},
     delApp: async function(id){
-        console.log(id)
+        // console.log(id)
         const result = await axios.delete(`/dash/appDelete/${id}`)
-        console.log(result)
+        // console.log(result)
         const resp = result.data
         if(resp[1]){
             // 成功
