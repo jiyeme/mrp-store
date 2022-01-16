@@ -46,7 +46,7 @@ Route::get('/App/list', [AppController::class, 'list'])->name('applist');
 Route::get('/App/info/{id}', [AppController::class, 'info'])->name('appinfo');
 
 Route::get('/upload', function () {
-    return view('upload');
+    return Inertia::render('App/upload');
 })->name('upload');
 
 Route::get('/support', function () {
