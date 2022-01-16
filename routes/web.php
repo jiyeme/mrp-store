@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AppMagController;
+use App\Http\Controllers\ResServerController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,8 +57,11 @@ Route::post('/api/download', [ApiController::class, 'download']);
 
 Route::any('/api.php', [ApiController::class, 'api']);
 
-
 Route::get('/dash/appMag', [AppMagController::class, 'appList'])->name('appMag');
 
 Route::get('/dash/appDetail/{id}', [AppMagController::class, 'getAppDetail'])->name('appDetail');
 Route::delete('/dash/appDelete/{id}', [AppMagController::class, 'delApp'])->name('appDelete');
+
+// 资源下载服务
+Route::post('/simpleDownload', [ResServerController::class, 'simpleDownload']);
+Route::post('/continueDownload', [ResServerController::class, 'continueDownload']);

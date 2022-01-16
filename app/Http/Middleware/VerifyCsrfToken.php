@@ -14,6 +14,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         'api/download',
-        'api.php'
+        'api.php',
+        '/simpleDownload',
+        '/continueDownload',
     ];
 }
