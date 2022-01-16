@@ -145,8 +145,8 @@
                     <div class="collapse navbar-collapse navbar-left navbar-collapse-menu" id="nav_right">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/">首页</a></li>
-                            <li id="navbar-mrpapp"><a href="/Store/App/list/slug/MRPAPP">MRP软游</a></li>
-                            <li id="navbar-jarapp"><a href="/Store/App/list/slug/JAVAAPP">Java软游</a></li>
+                            {{-- <li id="navbar-mrpapp"><a href="/Store/App/list/slug/MRPAPP">MRP软游</a></li>
+                            <li id="navbar-jarapp"><a href="/Store/App/list/slug/JAVAAPP">Java软游</a></li> --}}
                             <li id="navbar-upload"><a href="/upload">上传</a></li>
                             <li id="navbar-support"><a href="/support">支持赞助</a></li>
                             <li><a href="https://jq.qq.com/?_wv=1027&k=5dTIITy">加群反馈问题</a></li>

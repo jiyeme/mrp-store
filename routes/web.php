@@ -47,11 +47,11 @@ Route::get('/App/info/{id}', [AppController::class, 'info'])->name('appinfo');
 
 Route::get('/upload', function () {
     return view('upload');
-});
+})->name('upload');
 
 Route::get('/support', function () {
     return view('support');
-});
+})->name('support');
 
 Route::post('/api/download', [ApiController::class, 'download']);
 

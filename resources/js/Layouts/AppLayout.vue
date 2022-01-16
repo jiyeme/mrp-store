@@ -25,9 +25,20 @@
                                 <jet-nav-link :href="route('applist')" :active="route().current('applist')">
                                     应用列表
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                                <jet-nav-link :href="route('upload')" :active="route().current('upload')">
+                                    上传应用
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('support')" :active="route().current('support')">
+                                    支持
+                                </jet-nav-link>
+                                <a href="https://jq.qq.com/?_wv=1027&amp;k=5dTIITy" target="_blank" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">加群反馈问题</a>
+                                <jet-nav-link  v-if="$page.props.user" :href="route('dashboard')" :active="route().current('dashboard')">
                                     控制台
                                 </jet-nav-link>
+                                <jet-nav-link  v-if="$page.props.user" :href="route('appMag')" :active="route().current('appMag')">
+                                    应用管理
+                                </jet-nav-link>
+
                             </div>
                         </div>
 
@@ -109,11 +120,11 @@
                                     <template #content>
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Manage Account
+                                            账户管理
                                         </div>
 
                                         <jet-dropdown-link :href="route('profile.show')">
-                                            Profile
+                                            个人资料
                                         </jet-dropdown-link>
 
                                         <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -125,12 +136,15 @@
                                         <!-- Authentication -->
                                         <form @submit.prevent="logout">
                                             <jet-dropdown-link as="button">
-                                                Log Out
+                                                注销
                                             </jet-dropdown-link>
                                         </form>
                                     </template>
                                 </jet-dropdown>
                             </div>
+                        </div>
+                        <div v-else class="hidden sm:flex sm:items-center sm:ml-6">
+                            <Link :href="route('login')">登录</Link>
                         </div>
 
                         <!-- Hamburger -->
@@ -148,15 +162,25 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <jet-nav-link :href="route('index')" :active="route().current('index')">
+                        <jet-responsive-nav-link :href="route('index')" :active="route().current('index')">
                             首页
-                        </jet-nav-link>
+                        </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('applist')" :active="route().current('applist')">
                             应用列表
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                        <jet-nav-link :href="route('upload')" :active="route().current('upload')">
+                            上传应用
+                        </jet-nav-link>
+                        <jet-nav-link :href="route('support')" :active="route().current('support')">
+                            支持
+                        </jet-nav-link>
+                        <a href="https://jq.qq.com/?_wv=1027&amp;k=5dTIITy" target="_blank" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">加群反馈问题</a>
+                        <jet-nav-link  v-if="$page.props.user" :href="route('dashboard')" :active="route().current('dashboard')">
                             控制台
-                        </jet-responsive-nav-link>
+                        </jet-nav-link>
+                        <jet-nav-link  v-if="$page.props.user" :href="route('appMag')" :active="route().current('appMag')">
+                            应用管理
+                        </jet-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -174,7 +198,7 @@
 
                         <div class="mt-3 space-y-1">
                             <jet-responsive-nav-link :href="route('profile.show')" :active="route().current('profile.show')">
-                                Profile
+                                资料
                             </jet-responsive-nav-link>
 
                             <jet-responsive-nav-link :href="route('api-tokens.index')" :active="route().current('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -184,7 +208,7 @@
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
                                 <jet-responsive-nav-link as="button">
-                                    Log Out
+                                    注销
                                 </jet-responsive-nav-link>
                             </form>
 
