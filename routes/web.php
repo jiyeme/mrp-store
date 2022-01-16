@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\AppMagController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,41 +20,29 @@ use Inertia\Inertia;
 */
 Route::get('/test', [TestController::class, 'index']);
 
-Route::get('/d', function () {
-    return Inertia::render('Welcome', [
+Route::get('/', function () {
+    return Inertia::render('Index', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('index');
 
-Route::get('/', function () {
+Route::get('/old', function () {
     return view('index');
-    // return Inertia::render('Welcome', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::get('/hello', function () {
-    return "Hello World!";
-});
-
 Route::get('/list', function () {
     return view('index');
 });
 
 Route::get('/App/list', [AppController::class, 'list'])->name('applist');
-Route::get('App/info/{id}', [AppController::class, 'info'])->name('appinfo');
-
-Route::get('/Store/App/info/{id}', [AppController::class, 'info']);
+Route::get('/App/info/{id}', [AppController::class, 'info'])->name('appinfo');
 
 Route::get('/upload', function () {
     return view('upload');
@@ -63,6 +52,12 @@ Route::get('/support', function () {
     return view('support');
 });
 
-Route::post('api/download', [ApiController::class, 'download']);
+Route::post('/api/download', [ApiController::class, 'download']);
 
 Route::any('/api.php', [ApiController::class, 'api']);
+
+
+Route::get('/dash/appMag', [AppMagController::class, 'appList'])->name('appMag');
+
+Route::get('/dash/appDetail/{id}', [AppMagController::class, 'getAppDetail'])->name('appDetail');
+Route::delete('/dash/appDelete/{id}', [AppMagController::class, 'delApp'])->name('appDelete');
