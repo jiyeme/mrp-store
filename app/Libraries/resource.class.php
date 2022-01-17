@@ -10,6 +10,7 @@ class ResourceHandle
         '00002a32' => 'name',
         '00002a33' => 'version1',
         '00002a34' => 'version2',
+        '00002a36' => 'resid',
 
         '00002a3a' => 'brand',
         '00002a3b' => 'model',
