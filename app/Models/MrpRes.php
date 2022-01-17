@@ -28,7 +28,7 @@ class MrpRes extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'appid', 'res_id', 'name', 'in_name', 'author', 'description', 'version', 'size', 'path'];
+    protected $fillable = ['id', 'appid', 'res_id', 'name', 'in_name', 'author', 'description', 'version', 'size', 'path', 'store_file', 'store_folder'];
 
     /**
      * 为 array / JSON 序列化准备日期格式

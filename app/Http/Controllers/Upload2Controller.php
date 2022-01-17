@@ -269,7 +269,8 @@ class Upload2Controller extends Controller
                 'version' => $info['version'],
                 'path' => $file_name,
                 'md5' => $temp_md5,
-                'size' => $_FILES["file"]["size"]
+                'size' => $_FILES["file"]["size"],
+                'store_file' => $info['nn']
             ];
             // $result = DB::selectOne('SELECT `id` FROM `store_mrp_app` WHERE `md5` LIKE ?', [$temp_md5]);
             $result = MrpRes::where('md5', $temp_md5)->count();
