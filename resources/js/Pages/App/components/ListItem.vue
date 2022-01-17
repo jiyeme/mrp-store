@@ -13,9 +13,11 @@
           </el-row>
         </el-col>
         <el-col :span="5">
-          <el-button type="primary">
-            <Link :href="route('appinfo', {id: appInfo.id})">查看</Link>
-          </el-button>
+          <Link :href="route('appinfo', {id: appInfo.id})">
+            <el-button type="primary">
+                查看
+            </el-button>
+          </Link>
         </el-col>
       </el-row>
     </el-card>

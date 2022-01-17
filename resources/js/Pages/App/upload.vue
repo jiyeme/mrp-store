@@ -1,48 +1,15 @@
 <template>
   <app-layout title="上传">
     <div>
+      <div class="text-lg bg-white px-8">
+        <el-tabs v-model="type">
+          <el-tab-pane label="MRP应用" name="mrp"></el-tab-pane>
+          <el-tab-pane v-if="$page.props.user" label="MRP资源" name="mrpres"></el-tab-pane>
+        </el-tabs>
+      </div>
       <div class="m-10 flex justify-center">
-        <!-- <div class="app_left" id="game_left">
-          <div class="app_list_left">
-            <div class="left_nav">
-              <span class="left_nav_title">
-                <p>
-                  说明：
-                  <br />1.支持多选上传
-                  <br />2.重命名格式：显示名 _ MD5 .xxx
-                  <br />3.文件根据MD5判断是否存在
-                </p>
-              </span>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <div class="alllist_app">
-              <div class="flex">
-                <img class="w-20" style="border-radius: 35px;" src="/assets/img/mrp-icon.png" />
-                <div class="alllist_mss">
-                  <p class="list_app_title">多文件上传文件：</p>
-                  <p class="list_app_info">
-                    <input type="file" name="file" id="file1" accept=".mrp, .jar" multiple />
-                  </p>
-                </div>
-                <el-button @click="doUploadV3">上传</el-button>
-              </div>
-            </div>
-            <div style="width: 94%;margin: 0 auto;margin-top: 10px;margin-bottom: 13px;">
-              <span class="list_app_title">
-                文件：
-                <br />
-                <span id="toUploaded"></span>
-              </span>
-            </div>
-
-          </div>
-        </div>-->
-
         <el-upload
-          action="/api/upload2/mrp"
+          :action="`/api/upload2/${type}`"
           multiple
           :drag="true"
           :auto-upload="false"
@@ -52,6 +19,7 @@
           :on-success="uploadSuccess"
           :on-error="uploadError"
           :before-remove="()=>{return false}"
+          :with-credentials="true"
         >
           <template #trigger>
             <el-icon class="el-icon--upload">
@@ -75,7 +43,11 @@
               {{ scope.file.name }} |
               <span
                 :style="{color: scope.file.color ?? 'slateblue'}"
-              >{{scope.file.text ?? '等待'}}</span> <span v-if="scope.file.text === '已存在'">|<el-button type="text" @click="deleteFile(scope.file)">删除</el-button></span>
+              >{{scope.file.text ?? '等待'}}</span>
+              <span v-if="scope.file.text === '已存在'">
+                |
+                <el-button type="text" @click="deleteFile(scope.file)">删除</el-button>
+              </span>
             </div>
           </template>
         </el-upload>
@@ -99,13 +71,13 @@ export default defineComponent({
   data() {
     return {
       fileList: null,
+      type: "mrp",
     };
   },
-  mounted(){
-  },
+  mounted() {},
   methods: {
     fileChange: function (file, fileList) {
-    //   console.log(file, fileList, this.fileList);
+      //   console.log(file, fileList, this.fileList);
       if (this.fileList === null) this.fileList = fileList;
     },
     submitUpload: function () {
@@ -114,13 +86,14 @@ export default defineComponent({
     checkMd5: function (file) {
       // file --- this.fileList[index].raw
       // console.log(this.fileList, file)
+      const targetFile = this.fileList.find((f) => f.uid === file.uid);
+      targetFile.text = "检查MD5";
       return this.genMd5(file).then(async (md5) => {
         const res = await axios.post("/api/upload2/md5Check", {
-          type: "mrp",
+          type: this.type,
           md5,
         });
         const resp = res.data;
-        const targetFile = this.fileList.find((f) => f.uid === file.uid);
         if (resp.errCode === 2000) {
           console.log(resp);
           targetFile.text = "上传中";
@@ -129,26 +102,27 @@ export default defineComponent({
         }
         targetFile.text = resp.errMsg;
         targetFile.color = "red";
+        targetFile.status = "ready";
         return Promise.reject();
       });
     },
     uploadSuccess: function (resp, file, fileList) {
-      console.log(resp, file, fileList);
+      console.log('success', resp, file, fileList);
       if (resp.errCode === 2000) {
         file.text = "成功";
-        targetFile.color = "green";
+        file.color = "green";
       } else {
         file.text = resp.errMsg;
-        targetFile.color = "red";
+        file.color = "red";
       }
     },
     uploadError: function (err, file, fileList) {
-      console.log(err, file, fileList);
+      console.log('error', err, file, fileList);
     },
-    deleteFile: function(file){
-        const index = this.fileList.indexOf(file);
-        this.fileList.splice(index, 1)
-        // console.log(index, this.fileList)
+    deleteFile: function (file) {
+      const index = this.fileList.indexOf(file);
+      this.fileList.splice(index, 1);
+      // console.log(index, this.fileList)
     },
     genMd5: (file) => {
       return new Promise((resolve, reject) => {
