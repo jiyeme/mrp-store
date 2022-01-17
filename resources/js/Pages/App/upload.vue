@@ -1,7 +1,7 @@
 <template>
   <app-layout title="上传">
     <div>
-      <div class="m-10">
+      <div class="m-10 flex justify-center">
         <!-- <div class="app_left" id="game_left">
           <div class="app_list_left">
             <div class="left_nav">
