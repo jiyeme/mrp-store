@@ -58,10 +58,12 @@ Route::post('/api/download', [ApiController::class, 'download']);
 Route::any('/api.php', [ApiController::class, 'api']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dash/appMag', [AppMagController::class, 'appList'])->name('appMag');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dash/resMag', [AppMagController::class, 'resList'])->name('resMag');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dash/appDetail/{id}', [AppMagController::class, 'getAppDetail'])->name('appDetail');
 Route::middleware(['auth:sanctum', 'verified'])->delete('/dash/appDelete/{id}', [AppMagController::class, 'delApp'])->name('appDelete');
 Route::middleware(['auth:sanctum', 'verified'])->delete('/dash/verDelete/{id}', [AppMagController::class, 'delVer'])->name('verDelete');
+Route::middleware(['auth:sanctum', 'verified'])->delete('/dash/resDelete/{id}', [AppMagController::class, 'delRes'])->name('resDelete');
 
 // 资源下载服务
 Route::post('/simpleDownload', [ResServerController::class, 'simpleDownload']);

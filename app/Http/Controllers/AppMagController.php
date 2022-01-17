@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MrpApp;
 use App\Models\MrpList;
+use App\Models\MrpRes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -59,6 +60,28 @@ class AppMagController extends Controller
     // DELTETE 删除版本
     public function delVer($id){
         $result = MrpApp::find($id)->delete();
+        return ['result' => $result];
+    }
+
+    // GET 资源列表
+    public function resList(){
+        $result = MrpRes::paginate(20);
+
+        $resList = $result->items();
+        $currentpage = $result->currentPage();
+        $total = $result->total();
+        $lastPage = $result->lastpage();
+
+        return Inertia::render('Dashboard/ResMag', [
+            'resList' => $resList,
+            'currentPage' => $currentpage,
+            'total' => $total,
+            'lastPage' => $lastPage
+        ]);
+    }
+    // DELTETE 删除资源
+    public function delRes($id){
+        $result = MrpRes::find($id)->delete();
         return ['result' => $result];
     }
 }

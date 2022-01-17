@@ -38,6 +38,9 @@
                                 <jet-nav-link  v-if="$page.props.user" :href="route('appMag')" :active="route().current('appMag')">
                                     应用管理
                                 </jet-nav-link>
+                                <jet-nav-link  v-if="$page.props.user" :href="route('resMag')" :active="route().current('resMag')">
+                                    资源管理
+                                </jet-nav-link>
 
                             </div>
                         </div>
